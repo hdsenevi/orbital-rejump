@@ -13,6 +13,10 @@ func _ready() -> void:
 	load_score()
 	$HUD.hide()
 	
+func _process(delta):
+	if Input.is_action_just_pressed("debug_modifier"):
+		get_tree().paused = true
+	
 func new_game():
 	set_score(0)
 	level = 1

@@ -16,7 +16,7 @@ var color_schemes = {
 		'player_body': Color8(203, 255, 0),
 		'player_trail': Color8(204, 0, 255),
 		'circle_fill': Color8(255, 0, 110), 
-		'circle_static': Color8(0, 255, 102),
+		'circle_static': Color8(255, 255, 255),
 		'circle_limited': Color8(204, 0, 255)
 	},
 	"NEON2": {

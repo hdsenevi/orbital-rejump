@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/planet07.png-638c750d8e10c315946ade5d430e13b8.stex"
+path="res://.import/planet07.png-b50bbde3de8ae29bbf9ff543982dd0f9.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/planets/planet07.png"
-dest_files=[ "res://.import/planet07.png-638c750d8e10c315946ade5d430e13b8.stex" ]
+source_file="res://assets/images/Planets/planet07.png"
+dest_files=[ "res://.import/planet07.png-b50bbde3de8ae29bbf9ff543982dd0f9.stex" ]
 
 [params]
 

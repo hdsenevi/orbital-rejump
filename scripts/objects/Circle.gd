@@ -7,7 +7,7 @@ onready var animation_player = $AnimationPlayer
 onready var sprite = $Sprite
 onready var sprite_effect = $SpriteEffect
 onready var collision_shapre = $CollisionShape2D
-onready var label = $Label
+onready var label = $OrbitLabel
 onready var beep_sound = $Beep
 
 var planet_textures: Array

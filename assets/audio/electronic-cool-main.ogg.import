@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/electronic-cool-main.ogg-02a13c2909dc89a7cfdae8c7feed5c97.oggstr"
+
+[deps]
+
+source_file="res://assets/audio/electronic-cool-main.ogg"
+dest_files=[ "res://.import/electronic-cool-main.ogg-02a13c2909dc89a7cfdae8c7feed5c97.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

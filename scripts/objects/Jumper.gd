@@ -12,9 +12,16 @@ var velocity = Vector2(100, 0)
 var jump_speed = 1000
 var target = null
 var trail_length = 25
+var jumper_textures: Array
 
 func _ready():
-	sprite.material.set_shader_param("color", settings.theme["player_body"])
+	_pre_load_textures()
+	var rand_index = randi() % 20
+	sprite.texture = jumper_textures[rand_index]
+	
+	# Don't override jumper color
+	# sprite.material.set_shader_param("color", settings.theme["player_body"])
+	
 	trail.gradient.set_color(1, settings.theme["player_trail"])
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -54,3 +61,26 @@ func _on_VisibilityNotifier2D_screen_exited() -> void:
 	if !target:
 		emit_signal("died")
 		die()
+
+func _pre_load_textures() -> void:
+	jumper_textures.append(preload("res://assets/images/jumpers/jumper_1.png"))
+	jumper_textures.append(preload("res://assets/images/jumpers/jumper_2.png"))
+	jumper_textures.append(preload("res://assets/images/jumpers/jumper_3.png"))
+	jumper_textures.append(preload("res://assets/images/jumpers/jumper_4.png"))
+	jumper_textures.append(preload("res://assets/images/jumpers/jumper_5.png"))
+	jumper_textures.append(preload("res://assets/images/jumpers/jumper_6.png"))
+	jumper_textures.append(preload("res://assets/images/jumpers/jumper_7.png"))
+	jumper_textures.append(preload("res://assets/images/jumpers/jumper_8.png"))
+	jumper_textures.append(preload("res://assets/images/jumpers/jumper_9.png"))
+	jumper_textures.append(preload("res://assets/images/jumpers/jumper_10.png"))
+	jumper_textures.append(preload("res://assets/images/jumpers/jumper_11.png"))
+	jumper_textures.append(preload("res://assets/images/jumpers/jumper_12.png"))
+	jumper_textures.append(preload("res://assets/images/jumpers/jumper_13.png"))
+	jumper_textures.append(preload("res://assets/images/jumpers/jumper_14.png"))
+	jumper_textures.append(preload("res://assets/images/jumpers/jumper_15.png"))
+	jumper_textures.append(preload("res://assets/images/jumpers/jumper_16.png"))
+	jumper_textures.append(preload("res://assets/images/jumpers/jumper_17.png"))
+	jumper_textures.append(preload("res://assets/images/jumpers/jumper_18.png"))
+	jumper_textures.append(preload("res://assets/images/jumpers/jumper_19.png"))
+	jumper_textures.append(preload("res://assets/images/jumpers/jumper_20.png"))
+	

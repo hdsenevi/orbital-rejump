@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/electronic-chilled-main.ogg-07674e67d41c8bf2fcfa533b2fa12e5c.oggstr"
+
+[deps]
+
+source_file="res://assets/audio/electronic-chilled-main.ogg"
+dest_files=[ "res://.import/electronic-chilled-main.ogg-07674e67d41c8bf2fcfa533b2fa12e5c.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

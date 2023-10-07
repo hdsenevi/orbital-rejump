@@ -1,5 +1,8 @@
 extends Node
 
+onready var music = $Music
+onready var hud = $HUD
+
 var Circle = preload("res://scenes/objects/Circle.tscn")
 var Jumper = preload("res://scenes/objects/Jumper.tscn")
 
@@ -7,13 +10,17 @@ var player
 var score = 0 setget set_score
 var high_score = 0
 var level = 0
+var initial_music_volume = 0
+var new_high_score = false
 
 func _ready() -> void:
 	randomize()
 	load_score()
 	$HUD.hide()
+	initial_music_volume = music.volume_db
 	
 func new_game():
+	new_high_score = false
 	set_score(0)
 	level = 1
 	$HUD.update_score(score)
@@ -27,6 +34,7 @@ func new_game():
 	$HUD.show()
 	$HUD.show_message("Go!")
 	if settings.enable_music:
+		music.volume_db = initial_music_volume
 		$Music.play()
 	
 func spawn_circle(_position=null):
@@ -59,11 +67,15 @@ func _on_Jumper_died():
 	$Screens.game_over(score, high_score)
 	$HUD.hide()
 	if settings.enable_music:
-		$Music.stop()
+		fade_music()
 
 func set_score(value):
 	score = value
-	$HUD.update_score(value)
+	if score > high_score && !new_high_score:
+		hud.show_message("New Record!")
+		new_high_score = true
+		
+	hud.update_score(value)
 	if score > 0 && score % settings.circles_per_level == 0:
 		level += 1
 		$HUD.show_message("Level %s" % str(level))
@@ -80,3 +92,10 @@ func save_score():
 	f.open(settings.score_file, File.WRITE)
 	f.store_var(high_score)
 	f.close()
+
+func fade_music():
+	var tween = create_tween()
+	tween.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	tween.tween_property(music, "volume_db", -50, 1.0)
+	yield(tween, "finished")
+	music.stop()

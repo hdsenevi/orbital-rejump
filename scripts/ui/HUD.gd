@@ -3,7 +3,9 @@ extends CanvasLayer
 onready var message = $Message
 onready var animation_player = $AnimationPlayer
 onready var score_box = $ScoreBox
-onready var score = $ScoreBox/HBoxContainer/Score
+onready var score = $ScoreBox/ScoreContainer/Score
+onready var bonus_text = $ScoreBox/BonusContailer/Bonus
+onready var bonus_animation_player = $BonusAnimationPlayer
 
 func _ready():
 	# Change message pivot to it's middle
@@ -25,3 +27,8 @@ func show():
 	
 func update_score(value):
 	score.text = str(value)
+
+func update_bonus(value):
+	bonus_text = str(value)
+	if value > 1:
+		bonus_animation_player.play("bonus")

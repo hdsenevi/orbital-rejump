@@ -8,10 +8,12 @@ var Jumper = preload("res://scenes/objects/Jumper.tscn")
 
 var player
 var score = 0 setget set_score
+var num_circles = 0
 var high_score = 0
 var level = 0
 var initial_music_volume = 0
 var new_high_score = false
+var bonus = 0
 
 func _ready() -> void:
 	randomize()
@@ -22,8 +24,10 @@ func _ready() -> void:
 func new_game():
 	new_high_score = false
 	set_score(0)
+	set_bonus(0)
+	num_circles = 0
 	level = 1
-	$HUD.update_score(score)
+	$HUD.update_score(score, 0)
 	$Camera2D.position = $StartPosition.position
 	player = Jumper.instance()
 	player.position = $StartPosition.position
@@ -44,6 +48,7 @@ func spawn_circle(_position=null):
 		var y = rand_range(-500, -400)
 		_position = player.target.position + Vector2(x, y)
 	add_child(c)
+	c.connect("full_orbit", self, "set_bonus", [1])
 	c.init(_position, level)
 	
 func _on_Jumper_captured(object):
@@ -56,7 +61,13 @@ func _on_Jumper_captured(object):
 	call_deferred("spawn_circle")
 	
 	# increment score
-	set_score(score + 1)
+	set_score(score + (1 * bonus))
+	set_bonus(bonus + 1)
+	num_circles += 1
+	
+	if num_circles > 0 && num_circles % settings.circles_per_level == 0:
+		level += 1
+		hud.show_message("Level %s" % str(level))
 
 func _on_Jumper_died():
 	if score > high_score:
@@ -70,15 +81,11 @@ func _on_Jumper_died():
 		fade_music()
 
 func set_score(value):
+	hud.update_score(score, value)
 	score = value
 	if score > high_score && !new_high_score:
 		hud.show_message("New Record!")
 		new_high_score = true
-		
-	hud.update_score(value)
-	if score > 0 && score % settings.circles_per_level == 0:
-		level += 1
-		$HUD.show_message("Level %s" % str(level))
 
 func load_score():
 	var f = File.new()
@@ -99,3 +106,12 @@ func fade_music():
 	tween.tween_property(music, "volume_db", -50, 1.0)
 	yield(tween, "finished")
 	music.stop()
+
+func set_bonus(value):
+	
+	if value > 1: 
+		bonus = value 
+	else: 
+		bonus = 1
+		
+	hud.update_bonus(bonus)

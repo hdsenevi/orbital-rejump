@@ -3,9 +3,11 @@ extends CanvasLayer
 onready var message = $Message
 onready var animation_player = $AnimationPlayer
 onready var score_box = $ScoreBox
-onready var score = $ScoreBox/ScoreContainer/Score
+onready var score_text = $ScoreBox/ScoreContainer/Score
 onready var bonus_text = $ScoreBox/BonusContailer/Bonus
 onready var bonus_animation_player = $BonusAnimationPlayer
+
+var score = 0
 
 func _ready():
 	# Change message pivot to it's middle
@@ -25,10 +27,21 @@ func show():
 	score_box.show()
 	message.show()
 	
-func update_score(value):
-	score.text = str(value)
+func update_score(score, value):
+	$Tween.interpolate_property(self, "score", score, value, 0.3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.start()
 
 func update_bonus(value):
-	bonus_text = str(value)
+	# Don't do anything if the value is the same
+	if bonus_text.text == str(value):
+		return
+		
+	bonus_text.text = str(value)
 	if value > 1:
-		bonus_animation_player.play("bonus")
+		bonus_animation_player.play("bonus_increase")
+	else:
+		bonus_animation_player.play("bonus_decrease")
+
+
+func _on_Tween_tween_step(object, key, elapsed, value):
+	score_text.text = str(int(value))

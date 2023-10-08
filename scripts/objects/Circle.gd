@@ -1,5 +1,7 @@
 extends Area2D
 
+signal full_orbit
+
 onready var orbit_position = $Pivot/OrbitPosition
 onready var move_tween = $MoveTween
 onready var pivot = $Pivot
@@ -69,46 +71,55 @@ func set_mode(_mode):
 			label.hide()
 			color = settings.theme["circle_plain"]
 		MODES.LIMITED:
-			current_orbits = num_orbits
-			label.text = str(current_orbits)
+			label.text = str(num_orbits)
 			label.show()
 			color = settings.theme["circle_plain"]
 	sprite.material.set_shader_param("color", color)
 
 func _process(delta: float) -> void:
 	pivot.rotation += rotation_speed * delta
-	if mode == MODES.LIMITED and jumper:
+	if jumper:
 		check_orbits()
 		update()
 		
 # Checks how many orbits does jumper got left
 func check_orbits() -> void:
+	# Test if we've done a full circle
 	if abs(pivot.rotation - orbit_start) > 2 * PI:
-		current_orbits -= 1
-		if settings.enable_sound:
-			beep_sound.play()
-		label.text = str(current_orbits)
-		if current_orbits <= 0:
-			jumper.die()
-			jumper = null
-			implode()
+		current_orbits += 1
+		emit_signal("full_orbit")
+		
+		if mode == MODES.LIMITED:
+			if settings.enable_sound:
+				beep_sound.play()
+			label.text = str(num_orbits- current_orbits)
+			if current_orbits >= num_orbits:
+				jumper.die()
+				jumper = null
+				implode()
+				
 		orbit_start = pivot.rotation
 
 # Play circles implode animation		
 func implode():
+	jumper = null
 	animation_player.play("implode")
 	yield(animation_player, "animation_finished")
 	queue_free()
 	
 func capture(target):
+	current_orbits = 0
 	jumper = target
 	animation_player.play("capture")
 	pivot.rotation = (jumper.position - position).angle()
 	orbit_start = pivot.rotation
 	
 func _draw():
+	if mode != MODES.LIMITED:
+		return
+		
 	if jumper:
-		var r = ((radius - 30) / num_orbits) * (1 + num_orbits - current_orbits)
+		var r = ((radius - 30) / num_orbits) * (1 + current_orbits)
 		draw_circle_arc_poly(Vector2.ZERO, r, orbit_start + PI/2, pivot.rotation + PI/2, settings.theme["circle_fill"])
 	
 func draw_circle_arc_poly(center, radius, angle_from, angle_to, color):

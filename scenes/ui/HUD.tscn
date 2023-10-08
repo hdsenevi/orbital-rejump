@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://assets/fonts/kenvector_future_thin.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://scripts/ui/HUD.gd" type="Script" id=2]
@@ -179,7 +179,7 @@ tracks/2/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Color( 1, 0, 0, 1 ) ]
+"values": [ Color( 1, 1, 1, 1 ) ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("ScoreBox/BonusContailer/Bonus:custom_colors/font_color")
@@ -194,8 +194,8 @@ tracks/3/keys = {
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=10]
-resource_name = "bonus"
+[sub_resource type="Animation" id=11]
+resource_name = "bonus_decrease"
 tracks/0/type = "value"
 tracks/0/path = NodePath("ScoreBox/BonusContailer/Bonus:rect_scale")
 tracks/0/interp = 1
@@ -203,22 +203,22 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4 ),
+"times": PoolRealArray( 0, 0.2, 0.3 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 1, 1 ), Vector2( 1.5, 1.5 ), Vector2( 1, 1 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("ScoreBox/BonusContailer/x:rect_scale")
+tracks/1/path = NodePath("ScoreBox/BonusContailer/Bonus:custom_colors/font_color")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4 ),
+"times": PoolRealArray( 0, 0.2, 0.3 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 1, 1 ), Vector2( 1.5, 1.5 ), Vector2( 1, 1 ) ]
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("ScoreBox/BonusContailer/x:custom_colors/font_color")
@@ -227,22 +227,73 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4 ),
+"times": PoolRealArray( 0, 0.2, 0.3 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("ScoreBox/BonusContailer/Bonus:custom_colors/font_color")
+tracks/3/path = NodePath("ScoreBox/BonusContailer/x:rect_scale")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4 ),
+"times": PoolRealArray( 0, 0.2, 0.3 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+"values": [ Vector2( 1, 1 ), Vector2( 1.25, 1.25 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "bonus_increase"
+tracks/0/type = "value"
+tracks/0/path = NodePath("ScoreBox/BonusContailer/Bonus:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.5, 1.5 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("ScoreBox/BonusContailer/Bonus:custom_colors/font_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.211765, 1, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("ScoreBox/BonusContailer/x:rect_scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.25, 1.25 ), Vector2( 1, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("ScoreBox/BonusContailer/x:custom_colors/font_color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 0.211765, 1, 0, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
 [node name="HUD" type="CanvasLayer"]
@@ -260,21 +311,23 @@ margin_left = 20.0
 margin_top = 20.0
 margin_right = 460.0
 margin_bottom = 92.0
+custom_constants/separation = -5
 
 [node name="Bonus" type="Label" parent="ScoreBox/BonusContailer"]
 margin_right = 19.0
-margin_bottom = 72.0
-size_flags_vertical = 5
+margin_bottom = 48.0
+size_flags_vertical = 0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_fonts/font = SubResource( 7 )
 text = "1"
+align = 2
 
 [node name="x" type="Label" parent="ScoreBox/BonusContailer"]
-margin_left = 23.0
-margin_right = 43.0
-margin_bottom = 72.0
-size_flags_vertical = 5
-custom_colors/font_color = Color( 1, 0, 0, 1 )
+margin_left = 14.0
+margin_top = 16.0
+margin_right = 34.0
+margin_bottom = 55.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_fonts/font = SubResource( 8 )
 text = "x"
 
@@ -321,4 +374,9 @@ anims/show_message = SubResource( 6 )
 
 [node name="BonusAnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 9 )
-anims/bonus = SubResource( 10 )
+anims/bonus_decrease = SubResource( 11 )
+anims/bonus_increase = SubResource( 10 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[connection signal="tween_step" from="Tween" to="." method="_on_Tween_tween_step"]

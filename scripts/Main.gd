@@ -24,7 +24,7 @@ func _ready() -> void:
 func new_game():
 	new_high_score = false
 	set_score(0)
-	set_bonus(0)
+	bonus = 0
 	num_circles = 0
 	level = 1
 	$HUD.update_score(score, 0)
@@ -108,7 +108,6 @@ func fade_music():
 	music.stop()
 
 func set_bonus(value):
-	
 	if value > 1: 
 		bonus = value 
 	else: 

@@ -13,7 +13,7 @@ var high_score = 0
 var level = 0
 var initial_music_volume = 0
 var new_high_score = false
-var bonus = 0
+var bonus = 0.0
 
 func _ready() -> void:
 	randomize()
@@ -24,7 +24,7 @@ func _ready() -> void:
 func new_game():
 	new_high_score = false
 	set_score(0)
-	bonus = 0
+	bonus = 0.0
 	num_circles = 0
 	level = 1
 	$HUD.update_score(score, 0)
@@ -48,7 +48,7 @@ func spawn_circle(_position=null):
 		var y = rand_range(-500, -400)
 		_position = player.target.position + Vector2(x, y)
 	add_child(c)
-	c.connect("full_orbit", self, "set_bonus", [1])
+	c.connect("full_orbit", self, "set_bonus", [1.0])
 	c.init(_position, level)
 	
 func _on_Jumper_captured(object):
@@ -61,8 +61,8 @@ func _on_Jumper_captured(object):
 	call_deferred("spawn_circle")
 	
 	# increment score
-	set_score(score + (1 * bonus))
-	set_bonus(bonus + 1)
+	set_score(score + int(bonus))
+	set_bonus(bonus + 0.1)
 	num_circles += 1
 	
 	if num_circles > 0 && num_circles % settings.circles_per_level == 0:
@@ -107,10 +107,10 @@ func fade_music():
 	yield(tween, "finished")
 	music.stop()
 
-func set_bonus(value):
-	if value > 1: 
+func set_bonus(value: float) -> void:
+	if value > 1.0:
 		bonus = value 
 	else: 
-		bonus = 1
+		bonus = 1.0
 		
 	hud.update_bonus(bonus)

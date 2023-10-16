@@ -9,7 +9,9 @@ onready var animation_player = $AnimationPlayer
 onready var sprite = $Sprite
 onready var sprite_effect = $SpriteEffect
 onready var collision_shapre = $CollisionShape2D
-onready var label = $OrbitLabel
+onready var label = $LimitedOrbitIcon/OrbitLabel
+onready var limited_orbit_icon = $LimitedOrbitIcon
+onready var moving_planet_icon = $MovingPlanetIcon
 onready var beep_sound = $Beep
 
 var planet_textures: Array
@@ -25,12 +27,13 @@ var num_orbits = 3
 var current_orbits = 0
 var orbit_start = null
 var jumper = null
+var RANDOM_WEIGHTED_LEVEL_START = 5
 
 func _ready():
 	_pre_load_textures()
 	
 func init(_position, level=1):
-	var _mode = settings.rand_weighted([5, level-1])
+	var _mode = settings.rand_weighted([RANDOM_WEIGHTED_LEVEL_START, level-1])
 	set_mode(_mode)
 	position = _position
 	
@@ -68,11 +71,11 @@ func set_mode(_mode):
 	var color
 	match mode:
 		MODES.STATIC:
-			label.hide()
+			limited_orbit_icon.hide()
 			color = settings.theme["circle_plain"]
 		MODES.LIMITED:
 			label.text = str(num_orbits)
-			label.show()
+			limited_orbit_icon.show()
 			color = settings.theme["circle_plain"]
 	sprite.material.set_shader_param("color", color)
 
@@ -119,8 +122,8 @@ func _draw():
 		return
 		
 	if jumper:
-		var r = ((radius - 30) / num_orbits) * (1 + current_orbits)
-		draw_circle_arc_poly(Vector2.ZERO, r, orbit_start + PI/2, pivot.rotation + PI/2, settings.theme["circle_fill"])
+		var r = (radius - 33) / num_orbits
+		draw_circle_arc_poly(Vector2(0, 45), r, orbit_start + PI/2, pivot.rotation + PI/2, settings.theme["circle_fill"])
 	
 func draw_circle_arc_poly(center, radius, angle_from, angle_to, color):
 	var nb_points = 32
@@ -135,7 +138,10 @@ func draw_circle_arc_poly(center, radius, angle_from, angle_to, color):
 
 func set_tween(object=null, key=null):
 	if move_range == 0:
+		moving_planet_icon.hide()
 		return
+	
+	moving_planet_icon.show()
 		
 	move_range *= -1
 	move_tween.interpolate_property(self, "position:x", position.x, position.x + move_range, move_speed, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
